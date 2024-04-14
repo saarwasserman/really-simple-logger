@@ -36,8 +36,16 @@ func New(out io.Writer, minLevel LogLevel) *Logger {
 	}
 }
 
+func (l *Logger) Debug(message string, properties map[string]string) {
+	l.print(LevelDebug, message, properties)
+}
+
 func (l *Logger) Info(message string, properties map[string]string) {
 	l.print(LevelInfo, message, properties)
+}
+
+func (l *Logger) Warn(message string, properties map[string]string) {
+	l.print(LevelWarn, message, properties)
 }
 
 func (l *Logger) Error(err error, properties map[string]string) {
@@ -46,12 +54,6 @@ func (l *Logger) Error(err error, properties map[string]string) {
 
 func (l *Logger) Fatal(err error, properties map[string]string) {
 	l.print(LevelFatal, err.Error(), properties)
-}
-func (l *Logger) Warn(err error, properties map[string]string) {
-	l.print(LevelWarn, err.Error(), properties)
-}
-func (l *Logger) Debug(err error, properties map[string]string) {
-	l.print(LevelDebug, err.Error(), properties)
 }
 
 func (l *Logger) print(level LogLevel, message string, properties map[string]string) (int, error) {
